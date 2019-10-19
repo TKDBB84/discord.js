@@ -4,7 +4,7 @@ const Channel = require('./Channel');
 const Role = require('./Role');
 const Invite = require('./Invite');
 const PermissionOverwrites = require('./PermissionOverwrites');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const Permissions = require('../util/Permissions');
 const Collection = require('../util/Collection');
 const { Error, TypeError } = require('../errors');
@@ -307,7 +307,7 @@ class GuildChannel extends Channel {
    */
   async edit(data, reason) {
     if (typeof data.position !== 'undefined') {
-      await Util.setPosition(this, data.position, false,
+      await DiscordUtil.setPosition(this, data.position, false,
         this.guild._sortedChannels(this), this.client.api.guilds(this.guild.id).channels, reason)
         .then(updatedChannels => {
           this.client.actions.GuildChannelsPositionUpdate.handle({
@@ -404,7 +404,7 @@ class GuildChannel extends Channel {
    *   .catch(console.error);
    */
   setPosition(position, { relative, reason } = {}) {
-    return Util.setPosition(this, position, relative,
+    return DiscordUtil.setPosition(this, position, relative,
       this.guild._sortedChannels(this), this.client.api.guilds(this.guild.id).channels, reason)
       .then(updatedChannels => {
         this.client.actions.GuildChannelsPositionUpdate.handle({
@@ -471,7 +471,7 @@ class GuildChannel extends Channel {
    * @returns {Promise<GuildChannel>}
    */
   clone(options = {}) {
-    Util.mergeDefault({
+    DiscordUtil.mergeDefault({
       name: this.name,
       permissionOverwrites: this.permissionOverwrites,
       topic: this.topic,

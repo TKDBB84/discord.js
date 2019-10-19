@@ -2,7 +2,7 @@
 
 const VoiceWebSocket = require('./networking/VoiceWebSocket');
 const VoiceUDP = require('./networking/VoiceUDPClient');
-const Util = require('../../util/Util');
+const DiscordUtil = require('../../util/DiscordUtil');
 const { OPCodes, VoiceOPCodes, VoiceStatus, Events } = require('../../util/Constants');
 const AudioPlayer = require('./player/AudioPlayer');
 const VoiceReceiver = require('./receiver/Receiver');
@@ -181,7 +181,7 @@ class VoiceConnection extends EventEmitter {
    * @private
    */
   sendVoiceStateUpdate(options = {}) {
-    options = Util.mergeDefault({
+    options = DiscordUtil.mergeDefault({
       guild_id: this.channel.guild.id,
       channel_id: this.channel.id,
       self_mute: this.voice ? this.voice.selfMute : false,

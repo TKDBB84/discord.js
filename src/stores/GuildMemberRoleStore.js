@@ -1,7 +1,7 @@
 'use strict';
 
 const Collection = require('../util/Collection');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const { TypeError } = require('../errors');
 
 /**
@@ -160,6 +160,6 @@ class GuildMemberRoleStore extends Collection {
   }
 }
 
-Util.mixin(GuildMemberRoleStore, ['set']);
+DiscordUtil.mixin(GuildMemberRoleStore, ['set']);
 
 module.exports = GuildMemberRoleStore;

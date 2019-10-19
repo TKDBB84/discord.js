@@ -1,7 +1,7 @@
 'use strict';
 
 const GuildEmoji = require('./GuildEmoji');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const ReactionEmoji = require('./ReactionEmoji');
 const ReactionUserStore = require('../stores/ReactionUserStore');
 
@@ -65,7 +65,7 @@ class MessageReaction {
 
 
   toJSON() {
-    return Util.flatten(this, { emoji: 'emojiID', message: 'messageID' });
+    return DiscordUtil.flatten(this, { emoji: 'emojiID', message: 'messageID' });
   }
 
   _add(user) {

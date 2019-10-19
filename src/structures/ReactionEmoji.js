@@ -1,6 +1,6 @@
 'use strict';
 
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const Emoji = require('./Emoji');
 
 /**
@@ -20,7 +20,7 @@ class ReactionEmoji extends Emoji {
   }
 
   toJSON() {
-    return Util.flatten(this, { identifier: true });
+    return DiscordUtil.flatten(this, { identifier: true });
   }
 
   valueOf() {

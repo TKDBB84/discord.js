@@ -2,7 +2,7 @@
 
 const EventEmitter = require('events');
 const path = require('path');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const { Error } = require('../errors');
 let childProcess = null;
 let Worker = null;
@@ -163,7 +163,7 @@ class Shard extends EventEmitter {
    */
   async respawn(delay = 500, spawnTimeout) {
     this.kill();
-    if (delay > 0) await Util.delayFor(delay);
+    if (delay > 0) await DiscordUtil.delayFor(delay);
     return this.spawn(spawnTimeout);
   }
 
@@ -234,7 +234,7 @@ class Shard extends EventEmitter {
         if (!message || message._eval !== script) return;
         child.removeListener('message', listener);
         this._evals.delete(script);
-        if (!message._error) resolve(message._result); else reject(Util.makeError(message._error));
+        if (!message._error) resolve(message._result); else reject(DiscordUtil.makeError(message._error));
       };
       child.on('message', listener);
 
@@ -294,7 +294,7 @@ class Shard extends EventEmitter {
       if (message._sFetchProp) {
         this.manager.fetchClientValues(message._sFetchProp).then(
           results => this.send({ _sFetchProp: message._sFetchProp, _result: results }),
-          err => this.send({ _sFetchProp: message._sFetchProp, _error: Util.makePlainError(err) })
+          err => this.send({ _sFetchProp: message._sFetchProp, _error: DiscordUtil.makePlainError(err) })
         );
         return;
       }
@@ -303,7 +303,7 @@ class Shard extends EventEmitter {
       if (message._sEval) {
         this.manager.broadcastEval(message._sEval).then(
           results => this.send({ _sEval: message._sEval, _result: results }),
-          err => this.send({ _sEval: message._sEval, _error: Util.makePlainError(err) })
+          err => this.send({ _sEval: message._sEval, _error: DiscordUtil.makePlainError(err) })
         );
         return;
       }

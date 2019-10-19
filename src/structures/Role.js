@@ -2,7 +2,7 @@
 
 const Snowflake = require('../util/Snowflake');
 const Permissions = require('../util/Permissions');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const Base = require('./Base');
 const { Error, TypeError } = require('../errors');
 
@@ -180,7 +180,7 @@ class Role extends Base {
     if (typeof data.permissions !== 'undefined') data.permissions = Permissions.resolve(data.permissions);
     else data.permissions = this.permissions.bitfield;
     if (typeof data.position !== 'undefined') {
-      await Util.setPosition(this, data.position, false, this.guild._sortedRoles(),
+      await DiscordUtil.setPosition(this, data.position, false, this.guild._sortedRoles(),
         this.client.api.guilds(this.guild.id).roles, reason)
         .then(updatedRoles => {
           this.client.actions.GuildRolesPositionUpdate.handle({
@@ -192,7 +192,7 @@ class Role extends Base {
     return this.client.api.guilds[this.guild.id].roles[this.id].patch({
       data: {
         name: data.name || this.name,
-        color: data.color !== null ? Util.resolveColor(data.color || this.color) : null,
+        color: data.color !== null ? DiscordUtil.resolveColor(data.color || this.color) : null,
         hoist: typeof data.hoist !== 'undefined' ? data.hoist : this.hoist,
         permissions: data.permissions,
         mentionable: typeof data.mentionable !== 'undefined' ? data.mentionable : this.mentionable,
@@ -312,7 +312,7 @@ class Role extends Base {
    *   .catch(console.error);
    */
   setPosition(position, { relative, reason } = {}) {
-    return Util.setPosition(this, position, relative,
+    return DiscordUtil.setPosition(this, position, relative,
       this.guild._sortedRoles(), this.client.api.guilds(this.guild.id).roles, reason)
       .then(updatedRoles => {
         this.client.actions.GuildRolesPositionUpdate.handle({

@@ -1,6 +1,6 @@
 'use strict';
 
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const { RangeError } = require('../errors');
 
 /**
@@ -45,7 +45,7 @@ class MessageEmbed {
      * The color of this embed
      * @type {?number}
      */
-    this.color = Util.resolveColor(data.color);
+    this.color = DiscordUtil.resolveColor(data.color);
 
     /**
      * The timestamp of this embed
@@ -64,7 +64,7 @@ class MessageEmbed {
      * The fields of this embed
      * @type {EmbedField[]}
      */
-    this.fields = data.fields ? data.fields.map(Util.cloneObject) : [];
+    this.fields = data.fields ? data.fields.map(DiscordUtil.cloneObject) : [];
 
     /**
      * The thumbnail of this embed (if there is one)
@@ -248,7 +248,7 @@ class MessageEmbed {
    * @returns {MessageEmbed}
    */
   setAuthor(name, iconURL, url) {
-    this.author = { name: Util.resolveString(name), iconURL, url };
+    this.author = { name: DiscordUtil.resolveString(name), iconURL, url };
     return this;
   }
 
@@ -258,7 +258,7 @@ class MessageEmbed {
    * @returns {MessageEmbed}
    */
   setColor(color) {
-    this.color = Util.resolveColor(color);
+    this.color = DiscordUtil.resolveColor(color);
     return this;
   }
 
@@ -268,7 +268,7 @@ class MessageEmbed {
    * @returns {MessageEmbed}
    */
   setDescription(description) {
-    description = Util.resolveString(description);
+    description = DiscordUtil.resolveString(description);
     this.description = description;
     return this;
   }
@@ -280,7 +280,7 @@ class MessageEmbed {
    * @returns {MessageEmbed}
    */
   setFooter(text, iconURL) {
-    text = Util.resolveString(text);
+    text = DiscordUtil.resolveString(text);
     this.footer = { text, iconURL };
     return this;
   }
@@ -322,7 +322,7 @@ class MessageEmbed {
    * @returns {MessageEmbed}
    */
   setTitle(title) {
-    title = Util.resolveString(title);
+    title = DiscordUtil.resolveString(title);
     this.title = title;
     return this;
   }
@@ -338,7 +338,7 @@ class MessageEmbed {
   }
 
   toJSON() {
-    return Util.flatten(this, { hexColor: true });
+    return DiscordUtil.flatten(this, { hexColor: true });
   }
 
   /**
@@ -377,9 +377,9 @@ class MessageEmbed {
    * @returns {EmbedField}
    */
   static checkField(name, value, inline = false) {
-    name = Util.resolveString(name);
+    name = DiscordUtil.resolveString(name);
     if (!name) throw new RangeError('EMBED_FIELD_NAME');
-    value = Util.resolveString(value);
+    value = DiscordUtil.resolveString(value);
     if (!value) throw new RangeError('EMBED_FIELD_VALUE');
     return { name, value, inline };
   }

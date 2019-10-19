@@ -3,7 +3,7 @@
 require('setimmediate');
 const EventEmitter = require('events');
 const RESTManager = require('../rest/RESTManager');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const { DefaultOptions } = require('../util/Constants');
 
 /**
@@ -39,7 +39,7 @@ class BaseClient extends EventEmitter {
      * The options the client was instantiated with
      * @type {ClientOptions}
      */
-    this.options = Util.mergeDefault(DefaultOptions, options);
+    this.options = DiscordUtil.mergeDefault(DefaultOptions, options);
 
     /**
      * The REST manager of the client
@@ -140,7 +140,7 @@ class BaseClient extends EventEmitter {
   }
 
   toJSON(...props) {
-    return Util.flatten(this, { domain: false }, ...props);
+    return DiscordUtil.flatten(this, { domain: false }, ...props);
   }
 }
 

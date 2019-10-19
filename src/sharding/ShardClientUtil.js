@@ -1,6 +1,6 @@
 'use strict';
 
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const { Events } = require('../util/Constants');
 
 /**
@@ -98,7 +98,7 @@ class ShardClientUtil {
       const listener = message => {
         if (!message || message._sFetchProp !== prop) return;
         parent.removeListener('message', listener);
-        if (!message._error) resolve(message._result); else reject(Util.makeError(message._error));
+        if (!message._error) resolve(message._result); else reject(DiscordUtil.makeError(message._error));
       };
       parent.on('message', listener);
 
@@ -127,7 +127,7 @@ class ShardClientUtil {
       const listener = message => {
         if (!message || message._sEval !== script) return;
         parent.removeListener('message', listener);
-        if (!message._error) resolve(message._result); else reject(Util.makeError(message._error));
+        if (!message._error) resolve(message._result); else reject(DiscordUtil.makeError(message._error));
       };
       parent.on('message', listener);
 
@@ -168,7 +168,7 @@ class ShardClientUtil {
       try {
         this._respond('eval', { _eval: message._eval, _result: await this.client._eval(message._eval) });
       } catch (err) {
-        this._respond('eval', { _eval: message._eval, _error: Util.makePlainError(err) });
+        this._respond('eval', { _eval: message._eval, _error: DiscordUtil.makePlainError(err) });
       }
     }
   }

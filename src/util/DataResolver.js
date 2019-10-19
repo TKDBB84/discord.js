@@ -3,7 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 const fetch = require('node-fetch');
-const Util = require('../util/Util');
+const DiscordUtil = require('./DiscordUtil');
 const { Error: DiscordError, TypeError } = require('../errors');
 const { browser } = require('../util/Constants');
 
@@ -86,7 +86,7 @@ class DataResolver {
    */
   static resolveFile(resource) {
     if (!browser && Buffer.isBuffer(resource)) return Promise.resolve(resource);
-    if (browser && resource instanceof ArrayBuffer) return Promise.resolve(Util.convertToBuffer(resource));
+    if (browser && resource instanceof ArrayBuffer) return Promise.resolve(DiscordUtil.convertToBuffer(resource));
 
     if (typeof resource === 'string') {
       if (/^https?:\/\//.test(resource)) {

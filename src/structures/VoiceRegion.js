@@ -1,6 +1,6 @@
 'use strict';
 
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 
 /**
  * Represents a Discord voice region for guilds.
@@ -45,7 +45,7 @@ class VoiceRegion {
   }
 
   toJSON() {
-    return Util.flatten(this);
+    return DiscordUtil.flatten(this);
   }
 }
 

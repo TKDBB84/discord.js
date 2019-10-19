@@ -1,6 +1,6 @@
 'use strict';
 
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 
 /**
  * Represents a data model that is identifiable by a Snowflake (i.e. Discord API data models).
@@ -29,7 +29,7 @@ class Base {
   }
 
   toJSON(...props) {
-    return Util.flatten(this, ...props);
+    return DiscordUtil.flatten(this, ...props);
   }
 
   valueOf() {

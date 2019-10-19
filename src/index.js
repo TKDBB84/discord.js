@@ -1,6 +1,6 @@
 'use strict';
 
-const Util = require('./util/Util');
+const DiscordUtil = require('./util/DiscordUtil');
 
 module.exports = {
   // "Root" classes (starting points)
@@ -26,8 +26,9 @@ module.exports = {
   Snowflake: require('./util/Snowflake'),
   SnowflakeUtil: require('./util/Snowflake'),
   Structures: require('./util/Structures'),
-  Util: Util,
-  util: Util,
+  Util: DiscordUtil,
+  util: DiscordUtil,
+  DiscordUtil,
   version: require('../package.json').version,
 
   // Stores
@@ -45,12 +46,12 @@ module.exports = {
   UserStore: require('./stores/UserStore'),
 
   // Shortcuts to Util methods
-  discordSort: Util.discordSort,
-  escapeMarkdown: Util.escapeMarkdown,
-  fetchRecommendedShards: Util.fetchRecommendedShards,
-  resolveColor: Util.resolveColor,
-  resolveString: Util.resolveString,
-  splitMessage: Util.splitMessage,
+  discordSort: DiscordUtil.discordSort,
+  escapeMarkdown: DiscordUtil.escapeMarkdown,
+  fetchRecommendedShards: DiscordUtil.fetchRecommendedShards,
+  resolveColor: DiscordUtil.resolveColor,
+  resolveString: DiscordUtil.resolveString,
+  splitMessage: DiscordUtil.splitMessage,
 
   // Structures
   Base: require('./structures/Base'),

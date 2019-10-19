@@ -7,7 +7,7 @@ const Webhook = require('./Webhook');
 const VoiceRegion = require('./VoiceRegion');
 const { ChannelTypes, DefaultMessageNotifications, PartialTypes } = require('../util/Constants');
 const Collection = require('../util/Collection');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const DataResolver = require('../util/DataResolver');
 const Snowflake = require('../util/Snowflake');
 const GuildMemberStore = require('../stores/GuildMemberStore');
@@ -1166,7 +1166,7 @@ class Guild extends Base {
    * @private
    */
   _sortedRoles() {
-    return Util.discordSort(this.roles);
+    return DiscordUtil.discordSort(this.roles);
   }
 
   /**
@@ -1177,7 +1177,7 @@ class Guild extends Base {
    */
   _sortedChannels(channel) {
     const category = channel.type === ChannelTypes.CATEGORY;
-    return Util.discordSort(this.channels.filter(c =>
+    return DiscordUtil.discordSort(this.channels.filter(c =>
       c.type === channel.type && (category || c.parent === channel.parent)
     ));
   }

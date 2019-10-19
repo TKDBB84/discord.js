@@ -4,7 +4,7 @@ const DataResolver = require('../util/DataResolver');
 const MessageEmbed = require('./MessageEmbed');
 const MessageAttachment = require('./MessageAttachment');
 const { browser } = require('../util/Constants');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const { RangeError } = require('../errors');
 
 /**
@@ -74,7 +74,7 @@ class APIMessage {
     if (this.options.content === null) {
       content = '';
     } else if (typeof this.options.content !== 'undefined') {
-      content = Util.resolveString(this.options.content);
+      content = DiscordUtil.resolveString(this.options.content);
     }
 
     const isSplit = typeof this.options.split !== 'undefined' && this.options.split !== false;
@@ -93,7 +93,7 @@ class APIMessage {
     if (content || mentionPart) {
       if (isCode) {
         const codeName = typeof this.options.code === 'string' ? this.options.code : '';
-        content = `${mentionPart}\`\`\`${codeName}\n${Util.cleanCodeBlockContent(content || '')}\n\`\`\``;
+        content = `${mentionPart}\`\`\`${codeName}\n${DiscordUtil.cleanCodeBlockContent(content || '')}\n\`\`\``;
         if (isSplit) {
           splitOptions.prepend = `${splitOptions.prepend || ''}\`\`\`${codeName}\n`;
           splitOptions.append = `\n\`\`\`${splitOptions.append || ''}`;
@@ -110,7 +110,7 @@ class APIMessage {
       }
 
       if (isSplit) {
-        content = Util.splitMessage(content || '', splitOptions);
+        content = DiscordUtil.splitMessage(content || '', splitOptions);
       }
     }
 
@@ -233,11 +233,11 @@ class APIMessage {
 
     const findName = thing => {
       if (typeof thing === 'string') {
-        return Util.basename(thing);
+        return DiscordUtil.basename(thing);
       }
 
       if (thing.path) {
-        return Util.basename(thing.path);
+        return DiscordUtil.basename(thing.path);
       }
 
       return 'file.jpg';

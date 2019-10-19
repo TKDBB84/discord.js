@@ -1,7 +1,7 @@
 'use strict';
 
 const BaseCollection = require('@discordjs/collection');
-const Util = require('./Util');
+const DiscordUtil = require('./DiscordUtil');
 
 /**
  * A Map with additional utility methods. This is used throughout discord.js rather than Arrays for anything that has
@@ -10,7 +10,7 @@ const Util = require('./Util');
  */
 class Collection extends BaseCollection {
   toJSON() {
-    return this.map(e => typeof e.toJSON === 'function' ? e.toJSON() : Util.flatten(e));
+    return this.map(e => typeof e.toJSON === 'function' ? e.toJSON() : DiscordUtil.flatten(e));
   }
 }
 

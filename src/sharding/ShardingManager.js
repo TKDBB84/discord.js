@@ -5,7 +5,7 @@ const fs = require('fs');
 const EventEmitter = require('events');
 const Shard = require('./Shard');
 const Collection = require('../util/Collection');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const { Error, TypeError, RangeError } = require('../errors');
 
 /**
@@ -41,7 +41,7 @@ class ShardingManager extends EventEmitter {
    */
   constructor(file, options = {}) {
     super();
-    options = Util.mergeDefault({
+    options = DiscordUtil.mergeDefault({
       totalShards: 'auto',
       mode: 'process',
       respawn: true,
@@ -165,7 +165,7 @@ class ShardingManager extends EventEmitter {
   async spawn(amount = this.totalShards, delay = 5500, spawnTimeout) {
     // Obtain/verify the number of shards to spawn
     if (amount === 'auto') {
-      amount = await Util.fetchRecommendedShards(this.token);
+      amount = await DiscordUtil.fetchRecommendedShards(this.token);
     } else {
       if (typeof amount !== 'number' || isNaN(amount)) {
         throw new TypeError('CLIENT_INVALID_OPTION', 'Amount of shards', 'a number.');
@@ -195,7 +195,7 @@ class ShardingManager extends EventEmitter {
       const promises = [];
       const shard = this.createShard(shardID);
       promises.push(shard.spawn(spawnTimeout));
-      if (delay > 0 && this.shards.size !== this.shardList.length) promises.push(Util.delayFor(delay));
+      if (delay > 0 && this.shards.size !== this.shardList.length) promises.push(DiscordUtil.delayFor(delay));
       await Promise.all(promises); // eslint-disable-line no-await-in-loop
     }
 
@@ -254,7 +254,7 @@ class ShardingManager extends EventEmitter {
     let s = 0;
     for (const shard of this.shards.values()) {
       const promises = [shard.respawn(respawnDelay, spawnTimeout)];
-      if (++s < this.shards.size && shardDelay > 0) promises.push(Util.delayFor(shardDelay));
+      if (++s < this.shards.size && shardDelay > 0) promises.push(DiscordUtil.delayFor(shardDelay));
       await Promise.all(promises); // eslint-disable-line no-await-in-loop
     }
     return this.shards;

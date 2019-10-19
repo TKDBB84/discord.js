@@ -3,7 +3,7 @@
 const Collection = require('../util/Collection');
 const Snowflake = require('../util/Snowflake');
 const Webhook = require('./Webhook');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const PartialTypes = require('../util/Constants');
 
 /**
@@ -227,7 +227,7 @@ class GuildAuditLogs {
   }
 
   toJSON() {
-    return Util.flatten(this);
+    return DiscordUtil.flatten(this);
   }
 }
 
@@ -389,7 +389,7 @@ class GuildAuditLogsEntry {
   }
 
   toJSON() {
-    return Util.flatten(this, { createdTimestamp: true });
+    return DiscordUtil.flatten(this, { createdTimestamp: true });
   }
 }
 

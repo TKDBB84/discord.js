@@ -5,7 +5,7 @@ const MessageAttachment = require('./MessageAttachment');
 const Embed = require('./MessageEmbed');
 const ReactionCollector = require('./ReactionCollector');
 const ClientApplication = require('./ClientApplication');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const Collection = require('../util/Collection');
 const ReactionStore = require('../stores/ReactionStore');
 const { MessageTypes } = require('../util/Constants');
@@ -301,7 +301,7 @@ class Message extends Base {
    * @readonly
    */
   get cleanContent() {
-    return Util.cleanContent(this.content, this);
+    return DiscordUtil.cleanContent(this.content, this);
   }
 
   /**
@@ -466,7 +466,7 @@ class Message extends Base {
         user: this.client.user,
         channel: this.channel,
         message: this,
-        emoji: Util.parseEmoji(emoji),
+        emoji: DiscordUtil.parseEmoji(emoji),
       }).reaction);
   }
 

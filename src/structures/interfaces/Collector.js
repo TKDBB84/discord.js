@@ -1,7 +1,7 @@
 'use strict';
 
 const Collection = require('../../util/Collection');
-const Util = require('../../util/Util');
+const DiscordUtil = require('../../util/DiscordUtil');
 const EventEmitter = require('events');
 
 /**
@@ -228,7 +228,7 @@ class Collector extends EventEmitter {
   }
 
   toJSON() {
-    return Util.flatten(this);
+    return DiscordUtil.flatten(this);
   }
 
   /* eslint-disable no-empty-function, valid-jsdoc */

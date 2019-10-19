@@ -1,6 +1,6 @@
 'use strict';
 
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 
 /**
  * Represents an attachment in a message.
@@ -82,7 +82,7 @@ class MessageAttachment {
   }
 
   toJSON() {
-    return Util.flatten(this);
+    return DiscordUtil.flatten(this);
   }
 }
 

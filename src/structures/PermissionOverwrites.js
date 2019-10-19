@@ -2,7 +2,7 @@
 
 const Role = require('./Role');
 const Permissions = require('../util/Permissions');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const { TypeError } = require('../errors');
 
 /**
@@ -87,7 +87,7 @@ class PermissionOverwrites {
   }
 
   toJSON() {
-    return Util.flatten(this);
+    return DiscordUtil.flatten(this);
   }
 
   /**

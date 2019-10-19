@@ -1,6 +1,6 @@
 'use strict';
 
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const ActivityFlags = require('../util/ActivityFlags');
 const { ActivityTypes } = require('../util/Constants');
 
@@ -126,7 +126,7 @@ class Presence {
   }
 
   toJSON() {
-    return Util.flatten(this);
+    return DiscordUtil.flatten(this);
   }
 }
 

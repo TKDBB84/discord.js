@@ -2,7 +2,7 @@
 
 const DataStore = require('./DataStore');
 const Role = require('../structures/Role');
-const { resolveColor } = require('../util/Util');
+const { resolveColor } = require('../util/DiscordUtil');
 const Permissions = require('../util/Permissions');
 
 /**

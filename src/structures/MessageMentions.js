@@ -1,7 +1,7 @@
 'use strict';
 
 const Collection = require('../util/Collection');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const GuildMember = require('./GuildMember');
 const { ChannelTypes } = require('../util/Constants');
 
@@ -179,7 +179,7 @@ class MessageMentions {
   }
 
   toJSON() {
-    return Util.flatten(this, {
+    return DiscordUtil.flatten(this, {
       members: true,
       channels: true,
     });

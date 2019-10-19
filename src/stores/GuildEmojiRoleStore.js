@@ -1,7 +1,7 @@
 'use strict';
 
 const Collection = require('../util/Collection');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const { TypeError } = require('../errors');
 
 /**
@@ -111,6 +111,6 @@ class GuildEmojiRoleStore extends Collection {
   }
 }
 
-Util.mixin(GuildEmojiRoleStore, ['set']);
+DiscordUtil.mixin(GuildEmojiRoleStore, ['set']);
 
 module.exports = GuildEmojiRoleStore;

@@ -10,7 +10,7 @@ const { parse } = require('path');
 /**
  * Contains various general-purpose utility methods. These functions are also available on the base `Discord` object.
  */
-class Util {
+class DiscordUtil {
   constructor() {
     throw new Error(`The ${this.constructor.name} class may not be instantiated.`);
   }
@@ -39,7 +39,7 @@ class Util {
       // If it's a collection, make the array of keys
       if (element instanceof require('./Collection')) out[newProp] = Array.from(element.keys());
       // If it's an array, flatten each element
-      else if (Array.isArray(element)) out[newProp] = element.map(e => Util.flatten(e));
+      else if (Array.isArray(element)) out[newProp] = element.map(e => DiscordUtil.flatten(e));
       // If it's an object with a primitive `valueOf`, use that value
       else if (typeof valueOf !== 'object') out[newProp] = valueOf;
       // If it's a primitive
@@ -56,7 +56,7 @@ class Util {
    * @returns {string[]}
    */
   static splitMessage(text, { maxLength = 2000, char = '\n', prepend = '', append = '' } = {}) {
-    text = Util.resolveString(text);
+    text = DiscordUtil.resolveString(text);
     if (text.length <= maxLength) return [text];
     const splitText = text.split(char);
     if (splitText.some(chunk => chunk.length > maxLength)) throw new RangeError('SPLIT_MAX_LEN');
@@ -101,7 +101,7 @@ class Util {
     if (!codeBlockContent) {
       return text.split('```').map((subString, index, array) => {
         if ((index % 2) && index !== array.length - 1) return subString;
-        return Util.escapeMarkdown(subString, {
+        return DiscordUtil.escapeMarkdown(subString, {
           inlineCode,
           bold,
           italic,
@@ -115,7 +115,7 @@ class Util {
     if (!inlineCodeContent) {
       return text.split(/(?<=^|[^`])`(?=[^`]|$)/g).map((subString, index, array) => {
         if ((index % 2) && index !== array.length - 1) return subString;
-        return Util.escapeMarkdown(subString, {
+        return DiscordUtil.escapeMarkdown(subString, {
           codeBlock,
           bold,
           italic,
@@ -125,13 +125,13 @@ class Util {
         });
       }).join(inlineCode ? '\\`' : '`');
     }
-    if (inlineCode) text = Util.escapeInlineCode(text);
-    if (codeBlock) text = Util.escapeCodeBlock(text);
-    if (italic) text = Util.escapeItalic(text);
-    if (bold) text = Util.escapeBold(text);
-    if (underline) text = Util.escapeUnderline(text);
-    if (strikethrough) text = Util.escapeStrikethrough(text);
-    if (spoiler) text = Util.escapeSpoiler(text);
+    if (inlineCode) text = DiscordUtil.escapeInlineCode(text);
+    if (codeBlock) text = DiscordUtil.escapeCodeBlock(text);
+    if (italic) text = DiscordUtil.escapeItalic(text);
+    if (bold) text = DiscordUtil.escapeBold(text);
+    if (underline) text = DiscordUtil.escapeUnderline(text);
+    if (strikethrough) text = DiscordUtil.escapeStrikethrough(text);
+    if (spoiler) text = DiscordUtil.escapeSpoiler(text);
     return text;
   }
 
@@ -272,7 +272,7 @@ class Util {
       if (!has(given, key) || given[key] === undefined) {
         given[key] = def[key];
       } else if (given[key] === Object(given[key])) {
-        given[key] = Util.mergeDefault(def[key], given[key]);
+        given[key] = DiscordUtil.mergeDefault(def[key], given[key]);
       }
     }
 
@@ -286,7 +286,7 @@ class Util {
    * @private
    */
   static convertToBuffer(ab) {
-    if (typeof ab === 'string') ab = Util.str2ab(ab);
+    if (typeof ab === 'string') ab = DiscordUtil.str2ab(ab);
     return Buffer.from(ab);
   }
 
@@ -452,7 +452,7 @@ class Util {
    */
   static setPosition(item, position, relative, sorted, route, reason) {
     let updatedItems = sorted.array();
-    Util.moveElementInArray(updatedItems, item, position, relative);
+    DiscordUtil.moveElementInArray(updatedItems, item, position, relative);
     updatedItems = updatedItems.map((r, i) => ({ id: r.id, position: i }));
     return route.patch({ data: updatedItems, reason }).then(() => updatedItems);
   }
@@ -601,4 +601,4 @@ class Util {
   }
 }
 
-module.exports = Util;
+module.exports = DiscordUtil;

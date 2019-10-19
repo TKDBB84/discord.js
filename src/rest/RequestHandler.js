@@ -2,7 +2,7 @@
 
 const DiscordAPIError = require('./DiscordAPIError');
 const HTTPError = require('./HTTPError');
-const Util = require('../util/Util');
+const DiscordUtil = require('../util/DiscordUtil');
 const { Events: { RATE_LIMIT }, browser } = require('../util/Constants');
 
 function parseResponse(res) {
@@ -91,7 +91,7 @@ class RequestHandler {
         await this.manager.globalTimeout;
       } else {
         // Wait for the timeout to expire in order to avoid an actual 429
-        await Util.delayFor(timeout);
+        await DiscordUtil.delayFor(timeout);
       }
     }
 
@@ -127,7 +127,7 @@ class RequestHandler {
       // Handle global ratelimit
       if (res.headers.get('x-ratelimit-global')) {
         // Set the manager's global timeout as the promise for other requests to "wait"
-        this.manager.globalTimeout = Util.delayFor(this.retryAfter);
+        this.manager.globalTimeout = DiscordUtil.delayFor(this.retryAfter);
 
         // Wait for the global timeout to resolve before continuing
         await this.manager.globalTimeout;
@@ -149,7 +149,7 @@ class RequestHandler {
       // A ratelimit was hit - this should never happen
       this.queue.unshift(item);
       this.manager.client.emit('debug', `429 hit on route ${item.request.route}`);
-      await Util.delayFor(this.retryAfter);
+      await DiscordUtil.delayFor(this.retryAfter);
       return this.run();
     } else if (res.status >= 500 && res.status < 600) {
       // Retry the specified number of times for possible serverside issues

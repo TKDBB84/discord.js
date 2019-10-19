@@ -3,7 +3,7 @@
 const EventEmitter = require('events');
 const { Error: DJSError } = require('../../errors');
 const Collection = require('../../util/Collection');
-const Util = require('../../util/Util');
+const DiscordUtil = require('../../util/DiscordUtil');
 const WebSocketShard = require('./WebSocketShard');
 const { Events, ShardEvents, Status, WSCodes, WSEvents } = require('../../util/Constants');
 const PacketHandlers = require('./handlers');
@@ -275,7 +275,7 @@ class WebSocketManager extends EventEmitter {
     // If we have more shards, add a 5s delay
     if (this.shardQueue.size) {
       this.debug(`Shard Queue Size: ${this.shardQueue.size}; continuing in 5 seconds...`);
-      await Util.delayFor(5000);
+      await DiscordUtil.delayFor(5000);
       await this._handleSessionLimit();
       return this.createShards();
     }
@@ -298,7 +298,7 @@ class WebSocketManager extends EventEmitter {
       this.debug(`Couldn't reconnect or fetch information about the gateway. ${error}`);
       if (error.httpStatus !== 401) {
         this.debug(`Possible network error occurred. Retrying in 5s...`);
-        await Util.delayFor(5000);
+        await DiscordUtil.delayFor(5000);
         this.reconnecting = false;
         return this.reconnect();
       }
@@ -361,7 +361,7 @@ class WebSocketManager extends EventEmitter {
     }
     if (!remaining) {
       this.debug(`Exceeded identify threshold. Will attempt a connection in ${resetAfter}ms`);
-      await Util.delayFor(resetAfter);
+      await DiscordUtil.delayFor(resetAfter);
     }
   }
 
